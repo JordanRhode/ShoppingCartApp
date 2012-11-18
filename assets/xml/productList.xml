@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<store>
+	<product id="1" brand="La Sportiva">
+		<name>Solution Rock Shoes</name>
+		<price>170.00</price>
+		<description>The high-performancee La Sportiva Solution rock shoes hook, grab, edge, and smear to help you solve challenging bouldering problems.</description>
+		<quantity>4</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="2" brand="Mammut">
+		<name>Gravity superDRY 10.0mm x 60m Dry Rope</name>
+		<price>219.95</price>
+		<description>The Mammut Gravity superDRY™ 10.2mm x 60m dry rope has great all-around characteristics for sport, trad and alpine climbing.</description>
+		<quantity>2</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="3" brand="Mammut">
+		<name>Rope Bag Pro</name>
+		<price>44.95</price>
+		<description>Protect your climbing rope from abrasive dirt and harmful UV rays with the Mammut Rope Bag Pro.</description>
+		<quantity>6</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="4" brand="Black Diamond">
+		<name>Momentum SA Climbing Harness</name>
+		<price>54.95</price>
+		<description>The all-around Black Diamond Momentum SA climbing harness balances durability, breathability and comfort for sport climbing?, multipitch trad routes and glacier ascents.</description>
+		<quantity>11</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="5" brand="Petzl">
+		<name>Simba Climbing Harness - Kids'</name>
+		<price>59.95</price>
+		<description>Little tykes have you climbing the walls? Turn the tables on them with this Petzl Simba full body climbing harness made to fit 5 to 10 year olds.</description>
+		<quantity>4</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="6" brand="Black Diamond">
+		<name>Positron Screwgate Carabiner</name>
+		<price>7.95</price>
+		<description>The unique keylock nose prevents this carabiner from snagging on pro--it's clean and easy to clip!</description>
+		<quantity>14</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="7" brand="Petzl">
+		<name>Elios Climbing Helmet</name>
+		<price>65.00</price>
+		<description>The versatile and adjustable Petzl Elios helmet provides protection when you're climbing, canyoning, caving and mountaineering.</description>
+		<quantity>4</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="8" brand="Black Diamond">
+		<name>PosiWire Quickpack Quickdraw Set - Package of 6</name>
+		<price>79.95</price>
+		<description>Load up with this Black Diamond PosiWire Quickpack quickdraw set and head to the crag.</description>
+		<quantity>10</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+	<product id="9" brand="Mammut">
+		<name>Smart Alpine Belay Device 8.9 - 10.5mm</name>
+		<price>39.93</price>
+		<description>The Mammut Smart Alpine belay device employs all the great belay-assist features of the original Smart device, but can also be used with half or twin ropes for trips up alpine peaks.</description>
+		<quantity>7</quantity>
+		<thumbnail></thumbnail>
+	</product>
+	<product id="10" brand="Mammut">
+		<name>Contact Sling Dyneema 8.0</name>
+		<price>14.95</price>
+		<description>Leave those old bulky slings at home! The slim Mammut Contact Sling 8.0 weighs only 14g (60cm length) and has great handling characteristics to make clipping easy.</description>
+		<quantity>1</quantity>
+		<thumbnail></thumbnail>
+	</product>	
+</store>
