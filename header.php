@@ -11,6 +11,19 @@
 	</head>
 
 	<body>
-		<div id="container">
+		<div id="page_wrap">
 		<div id="header">
+			<div id="login">
+				<nav>
+					<ul>
+						<li id="register">
+							<a href="#">Register</a>
+						</li>
+						<li id="login">
+							<a href="#">Login</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<h2>Shopping Cart</h2>
 		</div>

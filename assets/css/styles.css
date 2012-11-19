@@ -1,0 +1,68 @@
+a, a:hover, a:visited
+{
+	color:#003399;
+	text-decoration: none;
+}
+
+body 
+{
+	background: #444444;
+}
+
+#footer
+{
+	padding:20px;
+}
+
+#header
+{
+	background-image: url("../images/bedge_grunge.png");
+	padding: 20px;
+}
+
+#login ul
+{
+	display: inline;
+	list-style: none;
+
+}
+
+#login ul li
+{
+	float: right;
+	padding:10px;
+}
+
+#page_wrap
+{
+	width: 940px;
+	margin: auto;
+	background-image: url("../images/subtle_dots.png");
+}
+
+#product_image
+{
+	float:left;
+}
+
+#product_list_table
+{
+	padding: 50px;
+	border-spacing: 0;
+}
+
+#product_list_table tr 
+{
+	vertical-align: top;
+}
+
+#product_list_table tr td
+{
+	padding: 10px;
+	border-bottom: 1px solid #444444;
+}
+
+#product_list_table tr td.product_name
+{
+	width: 200px;
+}
