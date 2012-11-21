@@ -25,5 +25,5 @@
 					</ul>
 				</nav>
 			</div>
-			<h2>Shopping Cart</h2>
+			<h2>R & R's Online Store</h2>
 		</div>
