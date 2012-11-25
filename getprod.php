@@ -33,7 +33,7 @@
 				echo "<br/>" . $description;
 				echo "<br/>$" . $price;
 			?>
-			<form name="product" action="#" method="post">
+			<form name="product" action="modcart.php" method="post">
 					<?php
 						if($prodName == "Solution Rock Shoes"){
 							echo "Size: <select>";
