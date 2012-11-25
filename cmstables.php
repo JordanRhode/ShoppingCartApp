@@ -1,5 +1,5 @@
 <?php //cmstables.php
-	requre_once "conn.php";
+	require_once "conn.php";
 
 	$sql = <<<EOS
 	CREATE TABLE IF NOT EXISTS rrTable_user (
@@ -58,7 +58,6 @@ EOS;
 		FOREIGN KEY (user-id) REFERENCES rrTable_user(user-id) 
 		)
 EOS;
-		//foreign key address-id, is this correct?
 		$result = mysql_query($sql) or
 			die(mysql_error());
 
@@ -71,7 +70,6 @@ EOS;
 		FOREIGN KEY (user-id) REFERENCES rrTable_user(user-id),
 		)
 EOS;
-		//foreign key prod-id references xml
 		$result = mysql_query($sql) or
 			die(mysql_error());
 
@@ -123,7 +121,7 @@ EOS;
 
 	$sql = <<<EOS
 	CREATE TABLE IF NOT EXISTS rrTable_transactions (
-		order-id INT(10) NOT NULL default '0',
+		trans-id INT(10) NOT NULL default '0',
 		line-num INT(10) NOT NULL default '0',
 		user-id INT(10) NOT NULL default '0',
 		prod-id INT(10) NOT NULL default '0',
