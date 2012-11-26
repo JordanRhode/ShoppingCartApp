@@ -78,3 +78,14 @@ body
 {
 	width: 200px;
 }
+
+#billingForm
+{
+	float: left;
+}
+
+#billingForm, #shippingForm
+{
+	
+	padding:20px;
+}
