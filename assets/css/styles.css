@@ -1,44 +1,80 @@
-a:link {
-	color:#87b636;
+a, a:hover, a:visited
+{
+	color:#003399;
 	text-decoration: none;
 }
 
-a:visited {
-	color:#87b636;
+body 
+{
+	background: #444444;
 }
 
-body {
-	background-image: url("../img/navy_blue.png");
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	color: white;
+#cart_info
+{
+	padding:10px;
 }
 
-#container {
-	width: 940px;
-	margin: -15px auto 0 auto;
-	padding: 25px;
+#footer
+{
+	padding:20px;
 }
 
-#footer {
-	float:right;
-}
-
-#header {
-	color: #87b636;
-	font-family: 'Walter Turncoat', cursive;
-	border-bottom: 1px solid white;
-}
-
-#logowelcome {
-	padding-left: 20px;
-}
-
-#maincolumn {
+#header
+{
+	background-image: url("../images/bedge_grunge.png");
 	padding: 20px;
 }
 
+#login ul
+{
+	display: inline;
+	list-style: none;
 
-#navright {
+}
+
+#login ul li
+{
 	float: right;
-	margin-top: -70px;
+	padding:10px;
+}
+
+#page_wrap
+{
+	width: 940px;
+	margin: auto;
+	background-image: url("../images/subtle_dots.png");
+}
+
+#product_image
+{
+	float:left;
+	padding-right: 20px;
+}
+
+#product_info
+{
+	height: 500px;
+	padding: 20px;
+}
+
+#product_list_table, #modcart_table
+{
+	padding: 50px;
+	border-spacing: 0;
+}
+
+#product_list_table tr, #modcart_table tr
+{
+	vertical-align: top;
+}
+
+#product_list_table tr td, #modcart_table tr td
+{
+	padding: 10px;
+	border-bottom: 1px solid #444444;
+}
+
+#product_list_table tr td.product_name
+{
+	width: 200px;
 }
