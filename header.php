@@ -17,7 +17,7 @@
 				<nav>
 					<ul>
 						<li id="register">
-							<a href="#">Register</a>
+							<a href="register.php">Register</a>
 						</li>
 						<li id="login">
 							<a href="#">Login</a>
