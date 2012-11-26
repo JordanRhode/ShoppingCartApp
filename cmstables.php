@@ -97,7 +97,6 @@ EOS;
 		billID INT(10) NOT NULL default '0',
 		subtotal FLOAT NOT NULL default '0',
 		shipCost FLOAT NOT NULL default '0',
-		tax FLOAT NOT NULL default '0',
 		total FLOAT NOT NULL default '0',
 		PRIMARY KEY (orderID, transID),
 		FOREIGN KEY (billID) REFERENCES rrTable_billing(billID),
