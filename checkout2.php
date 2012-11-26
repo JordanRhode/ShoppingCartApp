@@ -4,62 +4,111 @@
 	require_once 'conn.php';
 ?>
 <p>Step 1 - Please Enter Billing and Shipping Information <br/>
-<h5>Step 2 - Please Verify Accuracy and Make Any Neccessary Changes </h5>
-Step 3 - Order Confirmation and Receipt<br/><br/>
+<b>Step 2 - Please Verify Accuracy and Make Any Neccessary Changes </b><br/>
+Step 3 - Order Confirmation and Receipt<br/>
 
 <!--  Get address id's for billing and shipping, then set variables  -->
+<?php
+	if(isset($_SESSION["userID"])
+		and isset($_SESSION["baddressID"])
+		and isset($_SESSION["saddressID"]))
+	{
+		$userID = $_SESSION["userID"];
+		$baddressID = $_SESSION["baddressID"];
+		$saddressID = $_SESSION["saddressID"];
+		echo $baddressID . " " . $saddressID;
+		unset($_SESSION["baddressID"]);
+		unset($_SESSION["saddressID"]);
+
+		$sql = "SELECT first, last, addressID, houseNum, street, city, state, rrtable_address.zip " .
+		"FROM rrtable_name, rrtable_citystate, rrtable_address " .
+		"WHERE rrtable_name.userID = " . $userID .
+		" AND rrtable_address.addressID = " . $baddressID .
+		" AND rrtable_address.userID = " . $userID .
+		" AND rrtable_citystate.zip = rrtable_address.zip";
+		$result = mysql_query($sql, $conn) or die(mysql_error());
+		while($row=mysql_fetch_array($result))
+		{
+			$bfname = $row["first"];
+			$blName = $row["last"];
+			$bhouseNum = $row["houseNum"];
+			$bstreet = $row["street"];
+			$bcity = $row["city"];
+			$bstate = $row["state"];
+			$bzip = $row["zip"];
+		}
+
+		$sql = "SELECT first, last, addressID, houseNum, street, city, state, rrtable_address.zip " .
+		"FROM rrtable_name, rrtable_citystate, rrtable_address " .
+		"WHERE rrtable_name.userID = " . $userID .
+		" AND rrtable_address.addressID = " . $saddressID .
+		" AND rrtable_address.userID = " . $userID .
+		" AND rrtable_citystate.zip = rrtable_address.zip";
+		$result = mysql_query($sql, $conn) or die(mysql_error());
+		while($row=mysql_fetch_array($result))
+		{
+			$sfname = $row["first"];
+			$slName = $row["last"];
+			$shouseNum = $row["houseNum"];
+			$sstreet = $row["street"];
+			$scity = $row["city"];
+			$sstate = $row["state"];
+			$szip = $row["zip"];
+		}
+	}
+?>
 
 <div id="billingForm">
 	<form id="addressForm" name="addressForm" method="post" action="checkout.php">
 		<h3>Billing Information</h3>
         	First Name:&nbsp;&nbsp;
-            <input type="text" id="bfName" name="bfName" value="" />
+            <input type="text" id="bfName" name="bfName" value="<?php echo $bfname; ?>" />
             <p>
             Last Name:&nbsp;&nbsp;
-            <input type="text" id="blName" name="blName" value=""/>
+            <input type="text" id="blName" name="blName" value="<?php echo $blName; ?>"/>
             <p>
             House Number:&nbsp;&nbsp;
-            <input type="text" id="bhouseNum" name="bhouseNum" value=""/>
+            <input type="text" id="bhouseNum" name="bhouseNum" value="<?php echo $bhouseNum; ?>"/>
             <p>
             Street:&nbsp;&nbsp;
-            <input type="text" id="bstreet" name="bstreet" value=""/>
+            <input type="text" id="bstreet" name="bstreet" value="<?php echo $bstreet; ?>"/>
             <p>
             City:&nbsp;&nbsp;
-            <input type="text" id="bcity" name="bcity" value=""/>
+            <input type="text" id="bcity" name="bcity" value="<?php echo $bcity; ?>"/>
             <p>
             State:&nbsp;&nbsp;
-            <input type="text" id="bstate" name="bstate" value=""/>
+            <input type="text" id="bstate" name="bstate" value="<?php echo $bstate; ?>"/>
             <p>
             Zip:&nbsp;&nbsp;
-            <input type="text" id="bzip" name="bzip" value=""/>
+            <input type="text" id="bzip" name="bzip" value="<?php echo $bzip; ?>"/>
             <p>
-            <input type="hidden" id="baddressID" name="baddressID" value=""/>
+            <input type="hidden" id="baddressID" name="baddressID" value="<?php echo $baddressID; ?>"/>
 </div>
 <div id="shippingForm">
 	<h3>Shipping Information</h3>
 		
 			First Name:&nbsp;&nbsp;
-            <input type="text" id="sfName" name="sfName"/>
+            <input type="text" id="sfName" name="sfName" value="<?php echo $sfname; ?>" />
             <p>
             Last Name:&nbsp;&nbsp;
-            <input type="text" id="slName" name="slName"/>
+            <input type="text" id="slName" name="slName" value="<?php echo $slName; ?>" />
             <p>
             House Number:&nbsp;&nbsp;
-            <input type="text" id="shouseNum" name="shouseNum" />
+            <input type="text" id="shouseNum" name="shouseNum" value="<?php echo $shouseNum; ?>" />
             <p>
             Street:&nbsp;&nbsp;
-            <input type="text" id="sstreet" name="sstreet"/>
+            <input type="text" id="sstreet" name="sstreet" value="<?php echo $sstreet; ?>" />
             <p>
             City:&nbsp;&nbsp;
-            <input type="text" id="scity" name="scity"/>
+            <input type="text" id="scity" name="scity" value="<?php echo $scity; ?>" />
             <p>
             State:&nbsp;&nbsp;
-            <input type="text" id="sstate" name="sstate"/>
+            <input type="text" id="sstate" name="sstate" value="<?php echo $sstate; ?>" />
             <p>
             Zip:&nbsp;&nbsp;
-            <input type="text" id="szip" name="szip"/>
+            <input type="text" id="szip" name="szip" value="<?php echo $szip; ?>"/>
             <p>
-            <input type="hidden" id="saddressID" name="saddressID"/>
+            <input type="hidden" id="saddressID" name="saddressID" value="<?php echo $saddressID; ?>"/>
 </div>
 	
     <?php
