@@ -59,7 +59,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 ?>
 
 <div id="billingForm">
-	<form id="addressForm" name="addressForm" method="post" action="checkout.php">
+	<form id="addressForm" name="addressForm" method="post" action="#">
 		<h3>Billing Information</h3>
         	First Name:&nbsp;&nbsp;
             <input type="text" id="bfName" name="bfName" value="<?php echo $bfname; ?>" />
@@ -140,7 +140,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 				$total += ($price * $row["quantity"]);
 				echo "<tr>";
 				echo "<td><img src='" . $thumbnail . "' alt='" . $name . "' height='100' width='100'/></td>";
-				echo "<td class='product_name'><a href='getprod.php?name=" . $name . "'>" . $name . "</a></td>";
+				echo "<td class='product_name'>" . $name . "</td>";
 				echo "<td><p>$" . $price . "</p></td>";
 				echo "<td><p>$" . $price * $row["quantity"] . "</p></td>";
 				echo "<td><form name='product".$id."' action='modcart.php' method='post'>";

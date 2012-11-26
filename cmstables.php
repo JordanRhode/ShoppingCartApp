@@ -7,6 +7,7 @@
 		email VARCHAR(255) NOT NULL UNIQUE,
 		password VARCHAR(50) NOT NULL,
 		phone VARCHAR(15) default '000-000-0000',
+		numTransactions INT(10) NOT NULL default '0',
 		PRIMARY KEY (userID)
 		)
 EOS;
@@ -112,7 +113,7 @@ EOS;
 	$sql = <<<EOS
 	CREATE TABLE IF NOT EXISTS rrTable_transactions (
 		transID INT(10) NOT NULL default '0',
-		lineNum INT(10) NOT NULL default '0',
+		lineNum INT(10) NOT NULL auto_increment,
 		userID INT(10) NOT NULL default '0',
 		prodID INT(10) NOT NULL default '0',
 		quantity INT(5) NOT NULL default '0',

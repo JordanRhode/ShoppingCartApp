@@ -11,6 +11,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 	if(!isset($_POST["submit"])
 		and isset($_SESSION['userID']))
 	{
+		if(isset($_POST['addressID'])){
 		$userID = $_SESSION["userID"];
 		$addressID = $_POST["addressID"];
 		echo $addressID;
@@ -76,13 +77,13 @@ Step 3 - Order Confirmation and Receipt<br/>
 			          document.getElementById("sstate").value = document.getElementById("bstate").value;
 			          document.getElementById("szip").value = document.getElementById("bzip").value;
 			          document.getElementById("saddressID").value = document.getElementById("baddressID").value;
-			          document.getElementById("sfName").disabled = true;
-			          document.getElementById("slName").disabled = true;
-			          document.getElementById("shouseNum").disabled = true;
-			          document.getElementById("sstreet").disabled = true;
-			          document.getElementById("scity").disabled = true;
-			          document.getElementById("sstate").disabled = true;
-			          document.getElementById("szip").disabled = true;
+			          //document.getElementById("sfName").disabled = true;
+			          //document.getElementById("slName").disabled = true;
+			          //document.getElementById("shouseNum").disabled = true;
+			          //document.getElementById("sstreet").disabled = true;
+			          //document.getElementById("scity").disabled = true;
+			          //document.getElementById("sstate").disabled = true;
+			          //document.getElementById("szip").disabled = true;
 			}else{
 				document.getElementById("sfName").value = "";
 	          	document.getElementById("slName").value = "";
@@ -92,13 +93,13 @@ Step 3 - Order Confirmation and Receipt<br/>
 	          	document.getElementById("sstate").value = "";
 	          	document.getElementById("szip").value = "";
 	          	document.getElementById("saddressID").value = "";
-	          	document.getElementById("sfName").disabled = true;
-			    document.getElementById("slName").disabled = true;
-			    document.getElementById("shouseNum").disabled = true;
-			    document.getElementById("sstreet").disabled = true;
-			    document.getElementById("scity").disabled = true;
-			    document.getElementById("sstate").disabled = true;
-			    document.getElementById("szip").disabled = true;
+	          	//document.getElementById("sfName").disabled = true;
+			    //document.getElementById("slName").disabled = true;
+			    //document.getElementById("shouseNum").disabled = true;
+			    //document.getElementById("sstreet").disabled = true;
+			    //document.getElementById("scity").disabled = true;
+			    //document.getElementById("sstate").disabled = true;
+			    //document.getElementById("szip").disabled = true;
 			}
 		}
 		</script>

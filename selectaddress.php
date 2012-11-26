@@ -18,6 +18,7 @@
 			echo "<option value='" . $row["addressID"] . "'>" . $row["houseNum"] . " " . $row["street"] . " " . $row["zip"] . "</option>";
 		}
 		echo "</select><input type='submit' value='Submit'/></form></div>";
+		echo 'Or enter it <a href="checkout.php">manually.</a>';
 	}
 	require_once "footer.php";
 	?>
