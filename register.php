@@ -10,40 +10,41 @@
  
  <h1>Register</h1>
  <h3>Please fill in the information below.  Fields marked with * are required.</h3>       
-<form method="post" action="register.php">
+
+<form method="post" name="register_form" onSubmit="return validateRegister()"  action="register.php">
         	*First Name:&nbsp;&nbsp;
-            <input type="text" name="fName" />
+            <input type="text" name="fName" id="fName" />
             <p>
             *Last Name:&nbsp;&nbsp;
-            <input type="text" name="lName" />
+            <input type="text" name="lName" id="lName" />
             <p>
             *Email (this will act as your username):&nbsp;&nbsp;
-            <input type="text" name="email" />
+            <input type="text" name="email" id="email" />
             <p>
             Phone:&nbsp;&nbsp;
-            <input type="text" name="phone" />
+            <input type="text" name="phone" id="phone"/>
             <p>Enter an address so you can use it later for billing or shipping.</p>
             <p>
             *House Number:&nbsp;&nbsp;
-            <input type="text" name="houseNum" />
+            <input type="text" name="houseNum" id="houseNum"/>
             <p>
             *Street:&nbsp;&nbsp;
-            <input type="text" name="street" />
+            <input type="text" name="street" id="street"/>
             <p>
             *City:&nbsp;&nbsp;
-            <input type="text" name="city" />
+            <input type="text" name="city" id="city"/>
             <p>
             *State:&nbsp;&nbsp;
-            <input type="text" name="state" />
+            <input type="text" name="state" id="state"/>
             <p>
             *Zip:&nbsp;&nbsp;
-            <input type="text" name="zip" />
+            <input type="text" name="zip" id="zip"/>
             <p>
             *Password:&nbsp;&nbsp;
-            <input type="password" name="password" />
+            <input type="password" name="password" id="password"/>
             <p>
             *Re-Enter Password:&nbsp;&nbsp;
-            <input type="password" name="password2"  />
+            <input type="password" name="password2"  id="password2"/>
             <p>
             <input type="submit" name="submit" value="Register" />
 </form>
@@ -148,15 +149,17 @@
 				or die('Error with name:  ' . mysql_error());
 			
 			//address	
-			$sql = "INSERT INTO rrtable_address (userID, houseNum, street, zip)
-				VALUES ('$userID', '$houseNum', '$street', '$zip')";
-			$result = mysql_query($sql, $conn)
-				or die('Error with house number and street:  ' . mysql_error());
 				
 			$sql = "INSERT INTO rrtable_cityState (zip, city, state)
 				VALUES ('$zip', '$city', '$state')";
 			$result = mysql_query($sql, $conn)
 				or die('Error with city and state:  ' . mysql_error());
+
+			$sql = "INSERT INTO rrtable_address (userID, houseNum, street, zip)
+				VALUES ('$userID', '$houseNum', '$street', '$zip')";
+			$result = mysql_query($sql, $conn)
+				or die('Error with house number and street:  ' . mysql_error());
+			
 		}
 	
 		echo '<h3>Your account has been created!  Happy Shopping!</h3>';
