@@ -3,6 +3,7 @@
 	require_once "header.php";
 	require_once "http.php";
 ?>
+
 <p><b>Step 1 - Please Enter Billing and Shipping Information</b><br/>
 Step 2 - Please Verify Accuracy and Make Any Neccessary Changes<br/>
 Step 3 - Order Confirmation and Receipt<br/>
@@ -11,11 +12,10 @@ Step 3 - Order Confirmation and Receipt<br/>
 	if(!isset($_POST["submit"])
 		and isset($_SESSION['userID']))
 	{
-		if(isset($_POST['addressID'])){
 		$userID = $_SESSION["userID"];
 		$addressID = $_POST["addressID"];
-		echo $addressID;
 
+		//gets selected address from db and puts it in the billing form
 		$sql = "SELECT first, last, addressID, houseNum, street, city, state, rrtable_address.zip " .
 		"FROM rrtable_name, rrtable_citystate, rrtable_address " .
 		"WHERE rrtable_name.userID = " . $userID .
@@ -66,43 +66,49 @@ Step 3 - Order Confirmation and Receipt<br/>
 		
 		<input type="checkbox" id="checkShipping"  onclick="validate()">Same as billing?<br/>
 		
+		<!-- This script is used to disable/enable the shipping  form as well as auto fill the info -->
 		<script type="text/javascript">
-			function validate(){
-			if (document.getElementById('checkShipping').checked){
-			          document.getElementById("sfName").value = document.getElementById("bfName").value;
-			          document.getElementById("slName").value = document.getElementById("blName").value;
-			          document.getElementById("shouseNum").value = document.getElementById("bhouseNum").value;
-			          document.getElementById("sstreet").value = document.getElementById("bstreet").value;
-			          document.getElementById("scity").value = document.getElementById("bcity").value;
-			          document.getElementById("sstate").value = document.getElementById("bstate").value;
-			          document.getElementById("szip").value = document.getElementById("bzip").value;
-			          document.getElementById("saddressID").value = document.getElementById("baddressID").value;
-			          //document.getElementById("sfName").disabled = true;
-			          //document.getElementById("slName").disabled = true;
-			          //document.getElementById("shouseNum").disabled = true;
-			          //document.getElementById("sstreet").disabled = true;
-			          //document.getElementById("scity").disabled = true;
-			          //document.getElementById("sstate").disabled = true;
-			          //document.getElementById("szip").disabled = true;
-			}else{
-				document.getElementById("sfName").value = "";
-	          	document.getElementById("slName").value = "";
-	          	document.getElementById("shouseNum").value = "";
-	          	document.getElementById("sstreet").value = "";
-         	 	document.getElementById("scity").value = "";
-	          	document.getElementById("sstate").value = "";
-	          	document.getElementById("szip").value = "";
-	          	document.getElementById("saddressID").value = "";
-	          	//document.getElementById("sfName").disabled = true;
-			    //document.getElementById("slName").disabled = true;
-			    //document.getElementById("shouseNum").disabled = true;
-			    //document.getElementById("sstreet").disabled = true;
-			    //document.getElementById("scity").disabled = true;
-			    //document.getElementById("sstate").disabled = true;
-			    //document.getElementById("szip").disabled = true;
+			function validate()
+			{
+				if (document.getElementById('checkShipping').checked)
+				{
+				          document.getElementById("sfName").value = document.getElementById("bfName").value;
+				          document.getElementById("slName").value = document.getElementById("blName").value;
+				          document.getElementById("shouseNum").value = document.getElementById("bhouseNum").value;
+				          document.getElementById("sstreet").value = document.getElementById("bstreet").value;
+				          document.getElementById("scity").value = document.getElementById("bcity").value;
+				          document.getElementById("sstate").value = document.getElementById("bstate").value;
+				          document.getElementById("szip").value = document.getElementById("bzip").value;
+				          document.getElementById("saddressID").value = document.getElementById("baddressID").value;
+				          document.getElementById("sfName").disabled = true;
+				          document.getElementById("slName").disabled = true;
+				          document.getElementById("shouseNum").disabled = true;
+				          document.getElementById("sstreet").disabled = true;
+				          document.getElementById("scity").disabled = true;
+				          document.getElementById("sstate").disabled = true;
+				          document.getElementById("szip").disabled = true;
+				}
+				else
+				{
+					document.getElementById("sfName").value = "";
+		          	document.getElementById("slName").value = "";
+		          	document.getElementById("shouseNum").value = "";
+		          	document.getElementById("sstreet").value = "";
+	         	 	document.getElementById("scity").value = "";
+		          	document.getElementById("sstate").value = "";
+		          	document.getElementById("szip").value = "";
+		          	document.getElementById("saddressID").value = "";
+		          	document.getElementById("sfName").disabled = false;
+				    document.getElementById("slName").disabled = false;
+				    document.getElementById("shouseNum").disabled = false;
+				    document.getElementById("sstreet").disabled = false;
+				    document.getElementById("scity").disabled = false;
+				    document.getElementById("sstate").disabled = false;
+				    document.getElementById("szip").disabled = false;
+				}
 			}
-		}
 		</script>
+
 			First Name:&nbsp;&nbsp;
             <input type="text" id="sfName" name="sfName"/>
             <p>
@@ -132,7 +138,6 @@ Step 3 - Order Confirmation and Receipt<br/>
 	}
 	else
 	{
-		//if($_POST["saddressID"] != ""){
 			$userID = $_SESSION["userID"];
 			$sfName = $_POST["sfName"];
 			$bfName = $_POST["bfName"];
@@ -155,12 +160,13 @@ Step 3 - Order Confirmation and Receipt<br/>
 			$sql = "SELECT first, last, addressID, houseNum, street, city, state, rrtable_address.zip " .
 			"FROM rrtable_name, rrtable_citystate, rrtable_address " .
 			"WHERE rrtable_name.userID = " . $userID .
-			" AND rrtable_address.addressID = " . $baddressID .
 			" AND rrtable_address.userID = " . $userID .
-			" AND rrtable_citystate.zip = rrtable_address.zip";
+			" AND rrtable_address.houseNum =" . $bhouseNum .
+			" AND rrtable_address.street = '" . $bstreet .
+			"' AND rrtable_address.zip =" . $bzip;
 			$result = mysql_query($sql, $conn) or die("billing error. " . mysql_error());
 			$rows = mysql_fetch_array($result);
-			if(count($rows) == 0)
+			if($rows["addressID"] == "")
 			{
 				
 				$sql = "INSERT IGNORE INTO rrtable_cityState (zip, city, state)
@@ -173,17 +179,17 @@ Step 3 - Order Confirmation and Receipt<br/>
 				$result = mysql_query($sql, $conn)
 					or die('Error with house number and street:  ' . mysql_error());	
 				
-				// $sql = "SELECT addressID " .
-				// "FROM rrtable_address " .
-				// "WHERE userID =" . $userID .
-				// " AND houseNum =" . $bhouseNum .
-				// " AND street =" . $bstreet .
-				// " AND zip =" . $bzip;
-				// $result = mysql_query($sql, $conn) or die("shipping error. " .mysql_error());
-				// while($row=mysql_fetch_array($result))
-				// {
-				// 	$baddressID = $result["addressID"];
-				// }
+				//get new address id value
+				$sql = "SELECT * " .
+				"FROM rrtable_address " .
+				"WHERE userID =" . $userID .
+				" AND houseNum =" . $bhouseNum .
+				" AND street ='" . $bstreet . "'";
+				$result = mysql_query($sql, $conn) or die("shipping error. " .mysql_error());
+				while($row=mysql_fetch_array($result))
+				{
+					$baddressID = $row["addressID"];
+				}
 
 			}
 
@@ -191,36 +197,44 @@ Step 3 - Order Confirmation and Receipt<br/>
 			if($saddressID == "")
 			{
 
-			
-			$sql = "SELECT first, last, addressID, houseNum, street, city, state, rrtable_address.zip " .
-			"FROM rrtable_name, rrtable_citystate, rrtable_address " .
-			"WHERE rrtable_name.userID = " . $userID .
-			" AND rrtable_address.userID = " . $userID .
-			" AND rrtable_address.houseNum =" . $shouseNum .
-			" AND rrtable_address.street = '" . $sstreet .
-			"' AND rrtable_address.zip =" . $szip;
-			$result = mysql_query($sql, $conn) or die(mysql_error());
-			$rows = mysql_fetch_array($result);
-			if($rows["addressID"] == "")
-			{
+				$sql = "SELECT first, last, addressID, houseNum, street, city, state, rrtable_address.zip " .
+				"FROM rrtable_name, rrtable_citystate, rrtable_address " .
+				"WHERE rrtable_name.userID = " . $userID .
+				" AND rrtable_address.userID = " . $userID .
+				" AND rrtable_address.houseNum =" . $shouseNum .
+				" AND rrtable_address.street = '" . $sstreet .
+				"' AND rrtable_address.zip =" . $szip;
+				$result = mysql_query($sql, $conn) or die(mysql_error());
+				$rows = mysql_fetch_array($result);
+				if($rows["addressID"] == "")
+				{
+						
+					$sql = "INSERT IGNORE INTO rrtable_cityState (zip, city, state)
+						VALUES ('$szip', '$scity', '$sstate')";
+					$result = mysql_query($sql, $conn)
+						or die('Error with city and state:  ' . mysql_error());
+
+					$sql = "INSERT IGNORE INTO rrtable_address (userID, houseNum, street, zip)
+					VALUES ('$userID', '$shouseNum', '$sstreet', '$szip')";
+					$result = mysql_query($sql, $conn)
+						or die('Error with house number and street:  ' . mysql_error());
 					
-				$sql = "INSERT IGNORE INTO rrtable_cityState (zip, city, state)
-					VALUES ('$szip', '$scity', '$sstate')";
-				$result = mysql_query($sql, $conn)
-					or die('Error with city and state:  ' . mysql_error());
+					//get new address id value
+					$sql = "SELECT * " .
+					"FROM rrtable_address " .
+					"WHERE userID =" . $userID .
+					" AND houseNum =" . $shouseNum .
+					" AND street ='" . $sstreet . "'";
+					$result = mysql_query($sql, $conn) or die("shipping error. " .mysql_error());
+					while($row=mysql_fetch_array($result))
+					{
+						$saddressID = $row["addressID"];
+					}
 
-				$sql = "INSERT IGNORE INTO rrtable_address (userID, houseNum, street, zip)
-				VALUES ('$userID', '$shouseNum', '$sstreet', '$szip')";
-				$result = mysql_query($sql, $conn)
-					or die('Error with house number and street:  ' . mysql_error());
-				
-				//get new address id value
-
-			}
+				}
 			}
 			
-			//call checkout2.php with addressID values
-			echo $baddressID . " " . $saddressID;
+			//call checkout2.php with addressID values passed in session
 			$_SESSION["baddressID"] = $baddressID;
 			$_SESSION["saddressID"] = $saddressID;
 			redirect("checkout2.php");
