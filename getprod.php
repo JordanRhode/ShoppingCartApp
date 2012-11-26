@@ -17,6 +17,7 @@
 							$description = $product->description;
 							$quan = $product->quantity;
 							$largeImg = $product->large;
+							$id = $product->attributes()->id;
 						}
 					}
 					
@@ -30,13 +31,15 @@
 		<div id="product_text">
 			<?php
 				echo "<h2>" . $prodName . "</h2>";
+				echo "<br/>Product ID: " . $id;
 				echo "<br/>" . $description;
 				echo "<br/>$" . $price;
 			?>
 			<form name="product" action="modcart.php" method="post">
+				<input type="hidden" name="prodID" value="<?php echo "$id"; ?>"/>
 					<?php
 						if($prodName == "Solution Rock Shoes"){
-							echo "Size: <select>";
+							echo "Size: <select id='size_select' name='shoe_size'>";
 							for($size = 5; $size <= 14; $size++){
 								echo "<option value='" . $size . "'>" . $size . "</option>";
 							}
@@ -44,9 +47,9 @@
 						}
 					?>
 				Quantity: 
-				<select>
+				<select id='quantity_select' name='quantity'>
 					<?php
-						for($q = 0; $q <= $quan; $q++){
+						for($q = 1; $q <= $quan; $q++){
 							echo "<option value='" . $q . "'>" . $q . "</option>";
 						}
 					?>

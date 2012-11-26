@@ -1,51 +1,66 @@
 <?php //modcart.php
 	require_once "conn.php";
-
+	require_once "header.php";
 	//add new item to cart
-	if(isset($_POST["prod-id"])
+	if(isset($_POST["prodID"])
 		and isset($_POST["quantity"])
-		and isset($_SESSION["user-id"]))
+		and isset($_SESSION["userID"]))
 	{
-		$prod_id = $_POST["prod-id"];
+		$prodID = $_POST["prodID"];
 		$quantity = $_POST["quantity"];
-		$user_id = $_SESSION["user-id"];
-		$sql = "SELECT prod-id, quantity " .
+		$userID = $_SESSION["userID"];
+
+		$sql = "SELECT prodID, quantity " .
 				"FROM rrTable_cart " .
-				"WHERE user-id=" . $_SESSION("user-id");
+				"WHERE userID=" . $userID;
 		$result = mysql_query($sql, $conn) or
 			die("Couldn't retrieve items in cart. " . mysql_error());
 		$contains = false;
 		while($row = mysql_fetch_array($result))
 		{
-			if($row["prod-id"] == $prod_id){
+			if($row["prodID"] == $prodID){
 				$contains = true;
-				$sql2 = "UPDATE rrTable_cart " .
+				if($quantity == 0){
+					$sql = "DELETE FROM rrTable_cart " .
+							"WHERE (userID=".$userID.") and (prodID=".$prodID.")";
+					mysql_query($sql,$conn) or
+						die("Couldn't delet item from cart. " . mysql_error());
+					echo "Item removed from cart.<br/>";
+				}
+				else
+				{
+					$sql = "UPDATE rrTable_cart " .
 						"SET quantity=" . $quantity .
-						"WHERE prod-id=" . $prod_id;
-				mysql_query($sql2,$conn) or
-					die("couldn't add items in cart. " . mysql_error());
+						" WHERE (userID=".$userID.") and (prodID=".$prodID.")";
+			
+					mysql_query($sql,$conn) or
+						die("couldn't update items in cart. " . mysql_error());
+					echo "Cart Updated.<br/>";
+				}
 			}
 		}
 		if($contains == false)
 		{
 			$sql = "INSERT INTO rrTable_cart " .
-				"VALUES ('$user_id', '$prod_id', $quantity')";
+				"VALUES ('$userID', '$prodID', '$quantity')";
 				mysql_query($sql,$conn) or
 					die("couldn't add items in cart. " . mysql_error());
+			echo "Cart Updated.<br/>";
 		}
 	}
 
 	//display all items in cart
-	if(isset($_SESSION("user-id")))
-	{
-		$sql = "SELECT prod-id, quantity " .
+	 if(isset($_SESSION["userID"]))
+	 {
+	 	$userID = $_SESSION["userID"];
+		$sql = "SELECT prodID, quantity " .
 				"FROM rrTable_cart " .
-				"WHERE user-id=" . $_SESSION("user-id");
+				"WHERE userID=" . $userID;
 		$result = mysql_query($sql, $conn) or
 			die("Couldn't retrieve items in cart. " . mysql_error());
 		if(mysql_num_rows($result) == 0)
 		{
-			echo "There are currently no items in your cart."
+			echo "There are currently no items in your cart.";
 		}
 		else
 		{
@@ -54,23 +69,32 @@
 
 			echo "You currently have " . mysql_num_rows($result) . " product(s) in your cart.";
 			echo "<table id='modcart_table'>";
-			echo "<tr><td>Quantity</td><td>Item Image</td><td>Item Name</td><td>Price Each</td><td>Extended Price</td></tr>";
-			$total;
-			foreach ($xml->product as $product) {
-				$id = $product->id;
-				$name = $product->name;
-				$price = $product->price;
-				$thumbnail = $product->thumbnail;
-				$quan = $product->quantity;
-			
+			echo "<tr><td>Item Image</td><td>Item Name</td><td>Price Each</td><td>Extended Price</td><td>Quantity</td></tr>";
+			$total = 0;
+				
 				while($row = mysql_fetch_array($result))
 				{
-					if($id == $row["prod-id"])
+					foreach ($xml->product as $product) {
+						$id = $product->attributes()->id;
+						$name = $product->name;
+						$price = $product->price;
+						$thumbnail = $product->thumbnail;
+						$quan = $product->quantity;
+					
+
+					if($id == $row["prodID"])
 					{
 						$total += ($price * $row["quantity"]);
 						echo "<tr>";
-						echo "<td><select>";
-						for($q = 0; $q <= $quan; $q++)
+						echo "<td><img src='" . $thumbnail . "' alt='" . $name . "' height='100' width='100'/></td>";
+						echo "<td class='product_name'><a href='getprod.php?name=" . $name . "'>" . $name . "</a></td>";
+						echo "<td><p>$" . $price . "</p></td>";
+						echo "<td><p>$" . $price * $row["quantity"] . "</p></td>";
+						echo "<td><form name='product".$id."' action='modcart.php' method='post'>";
+						echo "<input type='hidden' name='prodID' value='".$id."'/>";
+						echo "<select id='quantity_select' name='quantity'>";
+
+						for($q = 1; $q <= $quan; $q++)
 						{
 							if($q == $row["quantity"])
 							{
@@ -81,25 +105,23 @@
 								echo "<option value='" . $q . "'>" . $q . "</option>";
 							}
 						}
-						echo "</select></td>";
-						echo "<td><img src='" . $thumbnail . "' alt='" . $name . "' height='100' width='100'/></td>";
-						echo "<td class='product_name'><a href='getprod.php?name=" . $name . "'>" . $name . "</a></td>";
-						echo "<td><p>$" . $price . "</p></td>";
-						echo "<td><p>$" . $price * $row["quantity"] . "</p></td>";
-						//change quantity
-						//delete item
-						
+						echo "</select><br/><input type='submit' value='Update Quantity'/></form>";
+						echo "<form name='deleteItem' action='modcart.php' method='post'>";
+						echo "<input type='hidden' name='prodID' value='".$id."'/>";
+						echo "<input type='hidden' name='quantity' value='0'/>";
+						echo "<input type='submit' value='Delete Item'/></form></td>";
 					}
 				}
 			}
-			echo "<tr><td></td><td></td><td></td><td>Your total before shipping is:</td>";
+			echo "<tr><td></td><td></td><td>Your total before shipping is:</td>";
 			echo "<td>$" . $total . "</td>";
 			//empty cart
 			echo "</table>";
 		}
 	}
-	else 
-	{
-		echo "Please <a href=#>Login</a> to view your cart.";
-	}
+	 else 
+	 {
+	 	echo "Please <a href=#>Login</a> to view or add items to your cart.";
+	 }
+	require_once "footer.php";
 ?>

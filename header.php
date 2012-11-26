@@ -25,5 +25,5 @@
 					</ul>
 				</nav>
 			</div>
-			<h2>R & R's Online Store</h2>
+			<a href="index.php"><h2>R & R's Online Store</h2></a>
 		</div>
