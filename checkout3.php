@@ -7,8 +7,11 @@
 
 		//  Set up Variables
 		$userID = $_SESSION['userID'];
-		$bAddressID = $_POST['baddressID'];
-		$sAddressID = $_POST['saddressID'];
+		$bAddressID = $_SESSION['baddressID'];
+		$sAddressID = $_SESSION['saddressID'];
+		$totQuan = 0;
+		$st = $_SESSION['subtotal'];
+		unset($_SESSION['subtotal']);
 		
 		//get user's transactions
 		$sql = "SELECT numTransactions FROM rrtable_user
@@ -29,6 +32,7 @@
 			//Input information into transactions table
 			$prodID = $row['prodID'];
 			$quan = $row['quantity'];
+			$totQuan += $quan;
 			$sql = "INSERT INTO rrtable_transactions (transID, userID, prodID, quantity)
 					VALUES ('$transID', '$userID', '$prodID', '$quan')";
 			mysql_query($sql, $conn) or die('Record Transaction error: ' . mysql_error());
@@ -83,6 +87,26 @@
 		$sCity = $row['city'];
 		$sState = $row['state'];
 		
+		//INSERT some info into order table
+		//Get order id
+		
+		//Insert info into billing table
+		$sql = "INSERT INTO rrtable_billing (addressID)
+				VALUES ('$bAddressID')";
+		mysql_query($sql, $conn) or die('Billing Input error: ' . mysql_error());
+		
+		//Get bill ID
+		//Insert info into shipping table
+		$sql = "INSERT INTO rrtable_shipping (addressID)
+				VALUES ('$sAddressID')";
+		mysql_query($sql, $conn) or die('Shipping Input error: ' . mysql_error());
+		
+		//Get shipping ID
+		//INSERT all info into order table
+		//Get order id
+		
+		echo "Total Quantity: " . $totQuan . "<br/>";
+		echo "Subtotal: " . $st . "<br/>";
 		echo "Billing: <br/>";
 		echo $bHouseNumber . " " . $bStreet . "<br/>";
 		echo $bCity . " " . $bState . " " . $bZip . "<br/>";
