@@ -1,6 +1,9 @@
 <?php //modcart.php
 	require_once "conn.php";
 	require_once "header.php";
+?>
+<div id="cart_info">
+<?php
 	//add new item to cart
 	if(isset($_POST["prodID"])
 		and isset($_POST["quantity"])
@@ -24,7 +27,7 @@
 					$sql = "DELETE FROM rrTable_cart " .
 							"WHERE (userID=".$userID.") and (prodID=".$prodID.")";
 					mysql_query($sql,$conn) or
-						die("Couldn't delet item from cart. " . mysql_error());
+						die("Couldn't delete item from cart. " . mysql_error());
 					echo "Item removed from cart.<br/>";
 				}
 				else
@@ -52,6 +55,7 @@
 	//display all items in cart
 	 if(isset($_SESSION["userID"]))
 	 {
+	 	echo "<a href='index.php'><-- Back to products</a>";
 	 	$userID = $_SESSION["userID"];
 		$sql = "SELECT prodID, quantity " .
 				"FROM rrTable_cart " .
@@ -60,14 +64,14 @@
 			die("Couldn't retrieve items in cart. " . mysql_error());
 		if(mysql_num_rows($result) == 0)
 		{
-			echo "There are currently no items in your cart.";
+			echo "<p>There are currently no items in your cart.</p>";
 		}
 		else
 		{
 			$xml = simplexml_load_file("assets/xml/productList.xml")
 					or die("Unable to lad XML file");
 
-			echo "You currently have " . mysql_num_rows($result) . " product(s) in your cart.";
+			echo "<p>You currently have " . mysql_num_rows($result) . " product(s) in your cart.</p>";
 			echo "<table id='modcart_table'>";
 			echo "<tr><td>Item Image</td><td>Item Name</td><td>Price Each</td><td>Extended Price</td><td>Quantity</td></tr>";
 			$total = 0;
@@ -113,15 +117,22 @@
 					}
 				}
 			}
-			echo "<tr><td></td><td></td><td>Your total before shipping is:</td>";
+			echo "<tr><td></td><td></td><td>Total before shipping:</td>";
 			echo "<td>$" . $total . "</td>";
 			//empty cart
+			echo "<td><form action='emptycart.php' method='post'>";
+			echo "<input type='submit' value='Empty Cart'/></form></td>";
 			echo "</table>";
+
+			echo "<a href=#>Proceed to checkout</a>";
 		}
 	}
 	 else 
 	 {
 	 	echo "Please <a href=#>Login</a> to view or add items to your cart.";
 	 }
+?>
+</div>
+<?php
 	require_once "footer.php";
 ?>

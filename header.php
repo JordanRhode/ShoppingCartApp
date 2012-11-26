@@ -16,12 +16,22 @@
 			<div id="login">
 				<nav>
 					<ul>
+						<?php
+							if(isset($_SESSION["userID"]))
+							{
+								echo "<li><a href='logout.php'>Logout</a></li>";
+								echo "<li><a href='modcart.php'>View Cart</a></li>";
+							}
+							else
+							{
+						?>
 						<li id="register">
 							<a href="register.php">Register</a>
 						</li>
 						<li id="login">
-							<a href="#">Login</a>
+							<a href="login.php">Login</a>
 						</li>
+						<?php } ?>
 					</ul>
 				</nav>
 			</div>

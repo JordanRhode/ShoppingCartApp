@@ -30,6 +30,7 @@
 		</div>
 		<div id="product_text">
 			<?php
+				echo "<a href='index.php'><-- Back to products</a>";
 				echo "<h2>" . $prodName . "</h2>";
 				echo "<br/>Product ID: " . $id;
 				echo "<br/>" . $description;
