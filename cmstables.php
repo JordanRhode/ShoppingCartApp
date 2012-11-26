@@ -65,34 +65,12 @@ EOS;
 			die(mysql_error());
 
 	$sql = <<<EOS
-	CREATE TABLE IF NOT EXISTS rrTable_order (
-		orderID INT(10) NOT NULL auto_increment,
-		transID INT(10) NOT NULL default '0',
-		orderDate DATE NOT NULL default '00-00-0000',
-		sAddressID INT(10) NOT NULL default '0',
-		sZip INT(5) NOT NULL default '12345',
-		bAddressID INT(10) NOT NULL default '0',
-		bZip INT(5) NOT NULL default '12345',
-		subtotal FLOAT NOT NULL default '0',
-		shipCost FLOAT NOT NULL default '0',
-		tax FLOAT NOT NULL default '0',
-		total FLOAT NOT NULL default '0',
-		PRIMARY KEY (orderID, transID),
-		FOREIGN KEY (sAddressID) REFERENCES rrTable_address(addressID),
-		FOREIGN KEY (sZip) REFERENCES rrTable_cityState(zip),
-		FOREIGN KEY (bAddressID) REFERENCES rrTable_address(addressID),
-		FOREIGN KEY (bZip) REFERENCES rrTable_cityState(zip)
-		)
-EOS;
-		$result = mysql_query($sql) or
-			die(mysql_error());
-
-	$sql = <<<EOS
 	CREATE TABLE IF NOT EXISTS rrTable_billing (
 		billID INT(10) NOT NULL auto_increment,
+		addressID INT(10) NOT NULL default '0',
 		orderID INT(10) NOT NULL default '0',
 		PRIMARY KEY (billID),
-		FOREIGN KEY (orderID) REFERENCES rrTable_order(orderID)
+		FOREIGN KEY (addressID) REFERENCES rrTable_address(addressID)
 		)
 EOS;
 		$result = mysql_query($sql) or
@@ -101,10 +79,29 @@ EOS;
 	$sql = <<<EOS
 	CREATE TABLE IF NOT EXISTS rrTable_shipping (
 		shipID INT(10) NOT NULL auto_increment,
+		addressID INT(10) NOT NULL default '0',
 		orderID INT(10) NOT NULL default '0',
-		dateShipped DATE NOT NULL default '00-00-0000',
 		PRIMARY KEY(shipID),
-		FOREIGN KEY(orderID) REFERENCES rrTable_order(orderID)
+		FOREIGN KEY (addressID) REFERENCES rrTable_address(addressID)
+		)
+EOS;
+		$result = mysql_query($sql) or
+			die(mysql_error());
+			
+	$sql = <<<EOS
+	CREATE TABLE IF NOT EXISTS rrTable_order (
+		orderID INT(10) NOT NULL auto_increment,
+		transID INT(10) NOT NULL default '0',
+		orderDate DATE NOT NULL default '00-00-0000',
+		shipID INT(10) NOT NULL default '0',
+		billID INT(10) NOT NULL default '0',
+		subtotal FLOAT NOT NULL default '0',
+		shipCost FLOAT NOT NULL default '0',
+		tax FLOAT NOT NULL default '0',
+		total FLOAT NOT NULL default '0',
+		PRIMARY KEY (orderID, transID),
+		FOREIGN KEY (billID) REFERENCES rrTable_billing(billID),
+		FOREIGN KEY (shipID) REFERENCES rrTable_shipping(shipID)
 		)
 EOS;
 		$result = mysql_query($sql) or
