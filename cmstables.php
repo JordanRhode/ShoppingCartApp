@@ -25,18 +25,6 @@ EOS;
 			die(mysql_error());
 
 	$sql = <<<EOS
-	CREATE TABLE IF NOT EXISTS rrTable_zip (
-		userID INT(10) NOT NULL default '0',
-		zip INT(5) NOT NULL default '12345',
-		PRIMARY KEY (userID),
-		FOREIGN KEY (userID) REFERENCES rrTable_user(userID),
-		FOREIGN KEY (zip) REFERENCES rrTable_cityState(zip)
-		)
-EOS;
-		$result = mysql_query($sql) or
-			die(mysql_error());
-
-	$sql = <<<EOS
 	CREATE TABLE IF NOT EXISTS rrTable_name (
 		userID INT(10) NOT NULL default '0',
 		first VARCHAR(50) NOT NULL,
@@ -54,8 +42,10 @@ EOS;
 		userID INT(10) NOT NULL default '0',
 		houseNum VARCHAR(30) NOT NULL,
 		street VARCHAR(50) NOT NULL,
+		zip INT(5) NOT NULL default '12345',
 		PRIMARY KEY (addressID),
-		FOREIGN KEY (userID) REFERENCES rrTable_user(userID) 
+		FOREIGN KEY (userID) REFERENCES rrTable_user(userID), 
+		FOREIGN KEY (zip) REFERENCES rrTable_cityState(zip)
 		)
 EOS;
 		$result = mysql_query($sql) or
