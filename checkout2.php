@@ -136,6 +136,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 					
 
 			if($id == $row["prodID"]){
+
 				$total += ($price * $row["quantity"]);
 				echo "<tr>";
 				echo "<td><img src='" . $thumbnail . "' alt='" . $name . "' height='100' width='100'/></td>";
@@ -151,6 +152,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 	
 	echo "<tr><td></td><td></td><td>Total before shipping:</td>";
 	echo "<td>$" . $total . "</td>";
+	$_SESSION["subtotal"] = $total;
 	//modify cart
 	echo '<td><a href="modcart.php">Modify Cart</a></td>';
 	echo "</table>";

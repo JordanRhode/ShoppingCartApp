@@ -3,7 +3,7 @@
 	require_once "header.php";
 	require_once "http.php";
 ?>
-
+<div id="cart_info">
 <p><b>Step 1 - Please Enter Billing and Shipping Information</b><br/>
 Step 2 - Please Verify Accuracy and Make Any Neccessary Changes<br/>
 Step 3 - Order Confirmation and Receipt<br/>
@@ -133,7 +133,7 @@ Step 3 - Order Confirmation and Receipt<br/>
             <input type="hidden" id="saddressID" name="saddressID"/>
 </div>
 	<input type="submit" name="submit" value="Submit"/>
-	</form>
+	</form></div>
 <?php
 	}
 	else
