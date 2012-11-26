@@ -4,6 +4,7 @@
 	require_once "conn.php";
 	require_once "http.php";
 ?>
+<div id="cart_info">
 <p>Step 1 - Please Enter Billing and Shipping Information <br/>
 <b>Step 2 - Please Verify Accuracy and Make Any Neccessary Changes </b><br/>
 Step 3 - Order Confirmation and Receipt<br/>
@@ -58,7 +59,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 ?>
 
 <div id="billingForm">
-	<form id="addressForm" name="addressForm" method="post" action="#">
+	<form id="addressForm" onSubmit="return validateCheckout()" name="addressForm" method="post" action="#">
 		<h3>Billing Information</h3>
         	First Name:&nbsp;&nbsp;
             <input type="text" id="bfName" name="bfName" value="<?php echo $bfname; ?>" />
@@ -158,7 +159,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 	echo "</table>";
 ?>
     <input type="submit" name="submit" value="Send order"/>
-	</form>
+	</form></div>
 <?php 
 		}
 		else 
@@ -258,7 +259,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 			}
 			
 			
-			//call checkout2.php with addressID values passed in session
+			//call checkout3.php with addressID values passed in session
 			unset($_SESSION["baddressID"]);
 			unset($_SESSION["saddressID"]);
 			$_SESSION["baddressID"] = $baddressID;

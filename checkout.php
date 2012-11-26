@@ -36,7 +36,7 @@ Step 3 - Order Confirmation and Receipt<br/>
 ?>
 
 <div id="billingForm">
-	<form id="addressForm" name="addressForm" method="post" action="checkout.php">
+	<form id="addressForm" name="addressForm" method="post" onSubmit="return validateCheckout()" action="checkout.php">
 		<h3>Billing Information</h3>
         	First Name:&nbsp;&nbsp;
             <input type="text" id="bfName" name="bfName" value="<?php echo $fname; ?>" />

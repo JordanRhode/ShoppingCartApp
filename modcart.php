@@ -124,7 +124,7 @@
 			echo "<input type='submit' value='Empty Cart'/></form></td>";
 			echo "</table>";
 
-			echo "<a href='selectaddress.php'>Proceed to checkout</a>";
+			echo "<div id='checkoutBtn1'><a href='selectaddress.php'>Proceed to checkout</a></div>";
 		}
 	}
 	 else 
